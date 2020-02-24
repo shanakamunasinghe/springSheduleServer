@@ -1,17 +1,10 @@
-package com.example.springserver.model;
+package com.example.springserver.dto;
 
-import javax.persistence.*;
-
-
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class UserDTO {
     private int id;
     private String name;
 
-    public User() {
+    public UserDTO() {
     }
 
     public int getId() {
