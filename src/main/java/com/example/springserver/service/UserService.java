@@ -20,8 +20,6 @@ public class UserService {
     @Autowired
     public RoleRepository roleRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserDTO mapUserToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
@@ -52,8 +50,7 @@ public class UserService {
         user.setUser_id(userDTO.getUser_id());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        String userPassword = userDTO.getPassword();
-        user.setPassword(bCryptPasswordEncoder.encode(userPassword));
+        user.setPassword(userDTO.getPassword());
 
         if(userDTO.getRolesDTO() != null) {
             List<Role> roles = new ArrayList<>();

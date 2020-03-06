@@ -16,6 +16,7 @@ public class User {
     private String email;
     private Date created;
     private Date modified;
+    private Double assets;
 
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -79,5 +80,13 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Double getAssets() {
+        return assets;
+    }
+
+    public void setAssets(Double assets) {
+        this.assets = assets;
     }
 }
