@@ -1,6 +1,10 @@
 package com.example.springserver.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "stocks")
@@ -10,6 +14,11 @@ public class Stock {
     private int stock_id;
     private String name;
     private String description;
+    @JsonBackReference
+    @OneToMany(mappedBy = "stock")
+    private List<UserStockLog> userStockLogs;
+    private Date created;
+    private Date modified;
 
     public Stock() {
     }
@@ -36,5 +45,29 @@ public class Stock {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public List<UserStockLog> getUserStockLogs() {
+        return userStockLogs;
+    }
+
+    public void setUserStockLogs(List<UserStockLog> userStockLogs) {
+        this.userStockLogs = userStockLogs;
     }
 }

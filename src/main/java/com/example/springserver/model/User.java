@@ -1,5 +1,7 @@
 package com.example.springserver.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,9 @@ public class User {
     private String name;
     private String password;
     private String email;
+    @JsonBackReference
+    @OneToMany(mappedBy="user")
+    private List<UserStockLog> userStockLogs;
     private Date created;
     private Date modified;
     private Double assets;
@@ -88,5 +93,13 @@ public class User {
 
     public void setAssets(Double assets) {
         this.assets = assets;
+    }
+
+    public List<UserStockLog> getUserStockLogs() {
+        return userStockLogs;
+    }
+
+    public void setUserStockLogs(List<UserStockLog> userStockLogs) {
+        this.userStockLogs = userStockLogs;
     }
 }

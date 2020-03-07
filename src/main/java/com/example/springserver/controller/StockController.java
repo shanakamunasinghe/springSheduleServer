@@ -2,7 +2,6 @@ package com.example.springserver.controller;
 
 
 import com.example.springserver.dto.StockDTO;
-import com.example.springserver.dto.UserDTO;
 import com.example.springserver.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

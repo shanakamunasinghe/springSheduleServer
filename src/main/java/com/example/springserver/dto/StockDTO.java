@@ -1,9 +1,13 @@
 package com.example.springserver.dto;
 
+import java.util.Date;
+
 public class StockDTO {
     private int stock_id;
     private String name;
     private String description;
+    private Date created;
+    private Date modified;
 
     public StockDTO() {
     }
