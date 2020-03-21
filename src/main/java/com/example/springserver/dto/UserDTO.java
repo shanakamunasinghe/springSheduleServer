@@ -10,7 +10,7 @@ public class UserDTO {
     private String email;
     private Date created;
     private Date modified;
-    private List<RoleDTO> rolesDTO;
+    private Double assets;
 
     public UserDTO() {
     }
@@ -63,11 +63,11 @@ public class UserDTO {
         this.modified = modified;
     }
 
-    public List<RoleDTO> getRolesDTO() {
-        return rolesDTO;
+    public Double getAssets() {
+        return assets;
     }
 
-    public void setRolesDTO(List<RoleDTO> rolesDTO) {
-        this.rolesDTO = rolesDTO;
+    public void setAssets(Double assets) {
+        this.assets = assets;
     }
 }

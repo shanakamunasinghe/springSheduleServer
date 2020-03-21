@@ -22,11 +22,9 @@ public class User {
     private Date created;
     private Date modified;
     private Double assets;
-
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    @JsonBackReference
+    @OneToMany(mappedBy="user")
+    private List<UserRoles> userRoles;
 
     public User() {
     }
@@ -79,14 +77,6 @@ public class User {
         this.user_id = user_id;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     public Double getAssets() {
         return assets;
     }
@@ -101,5 +91,13 @@ public class User {
 
     public void setUserStockLogs(List<UserStockLog> userStockLogs) {
         this.userStockLogs = userStockLogs;
+    }
+
+    public List<UserRoles> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRoles> userRoles) {
+        this.userRoles = userRoles;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.springserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,9 +16,9 @@ public class Role {
     private Date created;
     private Date modified;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> users;
+    @JsonBackReference
+    @OneToMany(mappedBy="role")
+    private List<UserRoles> userRoles;
 
     public Role() {
     }
@@ -53,5 +53,13 @@ public class Role {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public List<UserRoles> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRoles> userRoles) {
+        this.userRoles = userRoles;
     }
 }
