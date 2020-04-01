@@ -18,31 +18,42 @@ public class StockDataHandlerService {
 
     public StockDataHandlerService() {
         client = HttpClients.createDefault();
-
     }
 
-    public void getPredictionData() throws IOException {
+    public String getPredictionData() throws IOException {
         httpGet  = new HttpGet(GET_URL+"getValues");
         CloseableHttpResponse httpResponse = client.execute(httpGet);
         System.out.println(httpResponse.getStatusLine().getStatusCode());
         HttpEntity entity = httpResponse.getEntity();
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
-        System.out.println(content);
         httpResponse.close();
         client.close();
+        return content;
     }
 
-    public void getStockData() throws IOException {
+    public String getStockData() throws IOException {
         httpGet  = new HttpGet(GET_URL+"getValues");
         CloseableHttpResponse httpResponse = client.execute(httpGet);
         System.out.println(httpResponse.getStatusLine().getStatusCode());
         HttpEntity entity = httpResponse.getEntity();
         // Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
-        System.out.println(content);
         httpResponse.close();
         client.close();
+        return content;
+    }
+
+    public String createModel() throws IOException {
+        httpGet  = new HttpGet(GET_URL+"getValues");
+        CloseableHttpResponse httpResponse = client.execute(httpGet);
+        System.out.println(httpResponse.getStatusLine().getStatusCode());
+        HttpEntity entity = httpResponse.getEntity();
+        // Read the contents of an entity and return it as a String.
+        String content = EntityUtils.toString(entity);
+        httpResponse.close();
+        client.close();
+        return content;
     }
 
 }
