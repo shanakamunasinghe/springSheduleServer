@@ -22,4 +22,7 @@ public class SchedulerConfig {
         userResponse.setContent(Double.toString(value));
         template.convertAndSend("/topic/content",  userResponse);
     }
+
+    @Scheduled(fixedDelay = 3000)
+
 }
