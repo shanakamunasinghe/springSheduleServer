@@ -34,9 +34,10 @@ public class UserStockLogService {
         UserStockLogDTO userStockLogDTO = new UserStockLogDTO();
         userStockLogDTO.setUser_stock_id(UserStockLog.getUser_stock_id());
         userStockLogDTO.setAmount(UserStockLog.getAmount());
+        userStockLogDTO.setShares(UserStockLog.getShares());
         userStockLogDTO.setCreated(UserStockLog.getCreated());
         userStockLogDTO.setUserDTO(userService.mapUserToUserDTO(UserStockLog.getUser()));
-        userStockLogDTO.getStockDTO(stockService.mapStockToStockDTO(UserStockLog.getStock()));
+        userStockLogDTO.setStockDTO(stockService.mapStockToStockDTO(UserStockLog.getStock()));
 
         return userStockLogDTO;
     }

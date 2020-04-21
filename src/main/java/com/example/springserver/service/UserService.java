@@ -80,4 +80,14 @@ public class UserService {
         return userDTO;
     }
 
+    public UserDTO validateUser(UserDTO userDTO){
+        User user = userRepository.findByEmail(userDTO.getEmail());
+        if(userDTO.getEmail().equals(user.getEmail()) && userDTO.getPassword().equals(user.getPassword()))
+        {
+           return this.mapUserToUserDTO(user);
+        }else {
+            userDTO.setUser_id(0);
+            return userDTO;
+        }
+    }
 }

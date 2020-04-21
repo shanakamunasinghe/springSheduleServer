@@ -7,6 +7,7 @@ public class UserStockLogDTO {
     private UserDTO userDTO;
     private StockDTO stockDTO;
     private Double amount;
+    private Integer shares;
     private Date created;
     private Date modified;
 
@@ -29,7 +30,7 @@ public class UserStockLogDTO {
         this.userDTO = userDTO;
     }
 
-    public StockDTO getStockDTO(StockDTO stockDTO) {
+    public StockDTO getStockDTO() {
         return this.stockDTO;
     }
 
@@ -60,4 +61,8 @@ public class UserStockLogDTO {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
+    public Integer getShares() { return shares; }
+
+    public void setShares(Integer shares) { this.shares = shares; }
 }
