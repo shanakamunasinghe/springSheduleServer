@@ -24,6 +24,7 @@ public class UserStockLog {
     @JoinColumn(name = "stock_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Stock stock;
+    private Integer shares;
     private Double amount;
     private Date created;
     private Date modified;
@@ -47,9 +48,7 @@ public class UserStockLog {
         this.user = user;
     }
 
-    public Stock getStock() {
-        return stock;
-    }
+    public Stock getStock() { return stock; }
 
     public void setStock(Stock stock) {
         this.stock = stock;
@@ -78,4 +77,8 @@ public class UserStockLog {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
+    public Integer getShares() { return shares; }
+
+    public void setShares(Integer shares) { this.shares = shares; }
 }

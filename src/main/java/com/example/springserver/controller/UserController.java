@@ -37,5 +37,10 @@ public class UserController {
         return new ResponseEntity<UserDTO>(userService.addUser(userDTO), HttpStatus.OK);
     }
 
-
+    @RequestMapping(value = "/validate",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> validateUser(@RequestBody UserDTO userDTO) {
+       return new ResponseEntity<UserDTO> (userService.validateUser(userDTO), HttpStatus.OK);
+    }
 }
