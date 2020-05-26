@@ -25,7 +25,7 @@ public class UserStockLog {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Stock stock;
     private Integer shares;
-    private Double amount;
+    private Double price;
     private Date created;
     private Date modified;
 
@@ -70,12 +70,12 @@ public class UserStockLog {
         this.modified = modified;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setPrice(Double amount) {
+        this.price = amount;
     }
 
     public Integer getShares() { return shares; }

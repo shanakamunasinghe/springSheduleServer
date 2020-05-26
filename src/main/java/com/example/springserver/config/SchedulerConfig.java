@@ -16,30 +16,45 @@ public class SchedulerConfig {
     SimpMessagingTemplate template;
 
     StockDataHandlerService stockDataHandlerService;
+    int count = 0;
+    boolean enable = true;
+//    @Scheduled(fixedDelay = 3000)
+//    public void sendAddhocMessages() {
+//        int max = 100;
+//        int min = 0;
+//        double value = (Math.random()*((max-min)+1))+min;
+//        UserResponse userResponse = new UserResponse();
+//        userResponse.setContent(Double.toString(value));
+//        template.convertAndSend("/topic/content",  userResponse);
+//    }
 
-    @Scheduled(fixedDelay = 3000)
-    public void sendAddhocMessages() {
-        int max = 100;
-        int min = 0;
-        double value = (Math.random()*((max-min)+1))+min;
-        UserResponse userResponse = new UserResponse();
-        userResponse.setContent(Double.toString(value));
-        template.convertAndSend("/topic/content",  userResponse);
-    }
-
-    @Scheduled(fixedDelay = 40000)
+    @Scheduled(fixedDelay = 80000)
     public void sendHttpMessToCreateNewModel() throws IOException {
+        enable = false;
         stockDataHandlerService = new StockDataHandlerService();
         UserResponse userResponse = new UserResponse();
-        userResponse.setContent(stockDataHandlerService.createModel());
+        for(int co = 0; co <= 1; co++){
+            String content = stockDataHandlerService.createModel();
+            if(!content.isEmpty()) {
+                userResponse.setContent(content);
+                enable = true;
+                break;
+            }
+        }
         template.convertAndSend("/topic/model",  userResponse);
     }
 
-    @Scheduled(fixedDelay = 3000)
+    @Scheduled(fixedDelay = 5000)
     public void sendHttpMessToGetData() throws IOException {
-        stockDataHandlerService = new StockDataHandlerService();
-        UserResponse userResponse = new UserResponse();
-        userResponse.setContent(stockDataHandlerService.getStockData());
-        template.convertAndSend("/topic/data",  userResponse);
+        if(enable) {
+            stockDataHandlerService = new StockDataHandlerService();
+            UserResponse userResponse = new UserResponse();
+            String content = stockDataHandlerService.getStockData(count);
+            if (!content.isEmpty()) {
+                userResponse.setContent(content);
+                count++;
+            }
+            template.convertAndSend("/topic/data", userResponse);
+        }
     }
 }

@@ -19,6 +19,8 @@ public class Stock {
     private List<UserStockLog> userStockLogs;
     private Date created;
     private Date modified;
+    private Integer stock_amount;
+
 
     public Stock() {
     }
@@ -69,5 +71,13 @@ public class Stock {
 
     public void setUserStockLogs(List<UserStockLog> userStockLogs) {
         this.userStockLogs = userStockLogs;
+    }
+
+    public Integer getStock_amount() {
+        return stock_amount;
+    }
+
+    public void setStock_amount(Integer stock_amount) {
+        this.stock_amount = stock_amount;
     }
 }

@@ -20,6 +20,7 @@ public class StockService {
         stockDTO.setStock_id(stock.getStock_id());
         stockDTO.setName(stock.getName());
         stockDTO.setDescription(stock.getDescription());
+        stockDTO.setStock_amount(stock.getStock_amount());
         return stockDTO;
     }
 
@@ -28,7 +29,7 @@ public class StockService {
         stock.setStock_id(stockDTO.getStock_id());
         stock.setName(stockDTO.getName());
         stock.setDescription(stockDTO.getDescription());
-
+        stock.setStock_amount(stockDTO.getStock_amount());
         return stock;
     }
 

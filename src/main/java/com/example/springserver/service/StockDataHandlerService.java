@@ -13,27 +13,16 @@ import java.io.IOException;
 @Service
 public class StockDataHandlerService {
     CloseableHttpClient client;
-    private static final String GET_URL = "https://localhost:8000/";
+    private static final String GET_URL = "http://localhost:8000/stock/";
     HttpGet httpGet;
 
     public StockDataHandlerService() {
         client = HttpClients.createDefault();
     }
 
-    public String getPredictionData() throws IOException {
-        httpGet  = new HttpGet(GET_URL+"getValues");
-        CloseableHttpResponse httpResponse = client.execute(httpGet);
-        System.out.println(httpResponse.getStatusLine().getStatusCode());
-        HttpEntity entity = httpResponse.getEntity();
-        // Read the contents of an entity and return it as a String.
-        String content = EntityUtils.toString(entity);
-        httpResponse.close();
-        client.close();
-        return content;
-    }
-
-    public String getStockData() throws IOException {
-        httpGet  = new HttpGet(GET_URL+"getValues");
+    public String getStockData(int data) throws IOException {
+        String value = Integer.toString(data);
+        httpGet  = new HttpGet(GET_URL+"gatStockPrediction/"+value);
         CloseableHttpResponse httpResponse = client.execute(httpGet);
         System.out.println(httpResponse.getStatusLine().getStatusCode());
         HttpEntity entity = httpResponse.getEntity();
@@ -45,7 +34,7 @@ public class StockDataHandlerService {
     }
 
     public String createModel() throws IOException {
-        httpGet  = new HttpGet(GET_URL+"getValues");
+        httpGet  = new HttpGet(GET_URL+"startModel");
         CloseableHttpResponse httpResponse = client.execute(httpGet);
         System.out.println(httpResponse.getStatusLine().getStatusCode());
         HttpEntity entity = httpResponse.getEntity();
