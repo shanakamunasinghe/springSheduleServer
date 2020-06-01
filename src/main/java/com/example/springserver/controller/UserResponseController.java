@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class UserResponseController {
-    @MessageMapping("/content")
+    @MessageMapping("/hello")
     @SendTo("/topic/content")
-    public UserResponse getUser(User user) {
+    public UserResponse getUser(String user) {
         UserResponse userResponse = new UserResponse();
-        userResponse.setContent("Hi " + user.getName());
+        userResponse.setContent("Hi " + user);
         return userResponse;
     }
 }

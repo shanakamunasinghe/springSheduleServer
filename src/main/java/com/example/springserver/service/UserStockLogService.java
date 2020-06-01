@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserStockLogService {
     @Autowired
     public UserService userService;
@@ -65,7 +66,7 @@ public class UserStockLogService {
     // add stock data to user
     // has add exceptions
     // 1 - to done 0 - to not sufficient assets
-    @Transactional
+
     public Integer addStockToUser(int user_id, int stock_id, int stock_shares, Double stock_price) {
         UserStockLog userStockLog = userStockLogRepository.findByUserIdAndStockId(user_id, stock_id);
 
@@ -82,8 +83,7 @@ public class UserStockLogService {
         Double totalAssets = user.getAssets();
         if (price <= totalAssets) {
             user.setAssets(totalAssets - price);
-        }
-        else{
+        } else {
             return 0;
         }
         userRepository.save(user);
@@ -99,14 +99,14 @@ public class UserStockLogService {
             userStockLog.setCreated(new Date());
 
             userStockLogRepository.save(userStockLog);
-        }else {
+        } else {
             throw new IllegalArgumentException();
         }
         return 1;
     }
+
     // if buy - 1 sell - 0 <--- buyOrSell value
-    @Transactional
-    public Integer updateUserStock(int user_id, int stock_id, int stock_shares, Double stock_price, int buyOrSell){
+    public Integer updateUserStock(int user_id, int stock_id, int stock_shares, Double stock_price, int buyOrSell) {
         // check user assets
         User user = userRepository.getOne(user_id);
         Stock stock = stockRepository.getOne(stock_id);
@@ -118,30 +118,33 @@ public class UserStockLogService {
         }
         UserStockLog userStockLog = userStockLogRepository.findByUserIdAndStockId(user_id, stock_id);
 
-
-        if(buyOrSell == 1){
+        // buy
+        if (buyOrSell == 1) {
             Double price = stock_shares * stock_price;
             Double totalAssets = user.getAssets();
             if (price <= totalAssets) {
                 user.setAssets(totalAssets - price);
-            }
-            else{
+            } else {
                 return 0;
             }
             if (userStockLog != null) {
                 // has to add error validation
                 int old_shares = userStockLog.getShares();
+                Double old_value = userStockLog.getPrice();
+                Double new_price = (stock_price * stock_shares) + (old_value * old_shares) / (old_shares + stock_shares);
+
                 userStockLog.setUser(user);
 
                 // has to add error validation
                 userStockLog.setStock(stock);
 
-                userStockLog.setPrice(stock_price);
+                userStockLog.setPrice(new_price);
                 userStockLog.setShares(old_shares + stock_shares);
                 userStockLog.setCreated(new Date());
             }
         }
-        else{
+        // sell
+        else {
             Double price = stock_shares * stock_price;
             Double totalAssets = user.getAssets();
             user.setAssets(totalAssets + price);
@@ -153,7 +156,7 @@ public class UserStockLogService {
                 userStockLog.setStock(stock);
 
                 userStockLog.setPrice(stock_price);
-                if(old_shares < stock_shares){
+                if (old_shares < stock_shares) {
                     throw new IllegalArgumentException();
                 }
                 userStockLog.setShares(old_shares - stock_shares);

@@ -1,7 +1,6 @@
 package com.example.springserver.controller;
 
 
-import com.example.springserver.dto.StockDTO;
 import com.example.springserver.dto.StockTransactionDTO;
 import com.example.springserver.dto.UserStockLogDTO;
 import com.example.springserver.service.UserStockLogService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,15 +28,15 @@ public class UserStockLogController {
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> addStockToUser(@RequestBody StockTransactionDTO stockTransactionDTO){
-        return new ResponseEntity<Integer>(userStockLogService.addStockToUser(stockTransactionDTO.getUser_id(),
-                stockTransactionDTO.getStock_id(),stockTransactionDTO.getStock_shares(),stockTransactionDTO.getStock_price()),HttpStatus.OK);
+        return new ResponseEntity<Integer>(userStockLogService.addStockToUser(stockTransactionDTO.getUserId(),
+                stockTransactionDTO.getStockId(),stockTransactionDTO.getStockShares(),stockTransactionDTO.getStockPrice()),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/updateUserStock",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Integer> updateUserStock(@RequestBody StockTransactionDTO stockTransactionDTO){
-        return new ResponseEntity<Integer>(userStockLogService.updateUserStock(stockTransactionDTO.getUser_id(),
-                stockTransactionDTO.getStock_id(),stockTransactionDTO.getStock_shares(),stockTransactionDTO.getStock_price(),stockTransactionDTO.getBuyOrSell()),HttpStatus.OK);
+        return new ResponseEntity<Integer>(userStockLogService.updateUserStock(stockTransactionDTO.getUserId(),
+                stockTransactionDTO.getStockId(),stockTransactionDTO.getStockShares(),stockTransactionDTO.getStockPrice(),stockTransactionDTO.getBuyOrSell()),HttpStatus.OK);
     }
 }

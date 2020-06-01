@@ -1,7 +1,7 @@
 package com.example.springserver.dto;
 
 public class UserResponse {
-    String content;
+    private String content;
 
     public UserResponse() {
     }
