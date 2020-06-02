@@ -3,9 +3,10 @@ package com.example.springserver.dto;
 import java.util.Date;
 
 public class StockSocketResponse {
+    Double open;
     Double high;
     Double low;
-    Double price;
+    Double close;
     String predict;
     int stockId;
     Date date;
@@ -30,12 +31,12 @@ public class StockSocketResponse {
         this.low = low;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getClose() {
+        return close;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setClose(Double close) {
+        this.close = close;
     }
 
     public String getPredict() {
@@ -60,5 +61,13 @@ public class StockSocketResponse {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Double getOpen() {
+        return open;
+    }
+
+    public void setOpen(Double open) {
+        this.open = open;
     }
 }
