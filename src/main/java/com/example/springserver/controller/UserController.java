@@ -43,4 +43,10 @@ public class UserController {
     public ResponseEntity<UserDTO> validateUser(@RequestBody UserDTO userDTO) {
        return new ResponseEntity<UserDTO> (userService.validateUser(userDTO), HttpStatus.OK);
     }
+    @RequestMapping(value = "/deposit",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> depositMoney(@RequestBody UserDTO userDTO) {
+        return new ResponseEntity<UserDTO> (userService.depositMoney(userDTO), HttpStatus.OK);
+    }
 }

@@ -21,4 +21,27 @@ public class UserRoles {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    public Role getRole() {
+        return role;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
