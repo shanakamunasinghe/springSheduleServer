@@ -6,7 +6,7 @@ public class UserStockLogDTO {
     private int user_stock_id;
     private UserDTO userDTO;
     private StockDTO stockDTO;
-    private Double amount;
+    private Double price;
     private Integer shares;
     private Double spending;
     private Double profit;
@@ -56,12 +56,12 @@ public class UserStockLogDTO {
         this.modified = modified;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Integer getShares() { return shares; }
