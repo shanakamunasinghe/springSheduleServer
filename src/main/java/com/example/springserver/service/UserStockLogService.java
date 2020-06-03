@@ -41,7 +41,7 @@ public class UserStockLogService {
         userStockLogDTO.setAmount(UserStockLog.getPrice());
         userStockLogDTO.setShares(UserStockLog.getShares());
         userStockLogDTO.setCreated(UserStockLog.getCreated());
-        userStockLogDTO.setSpendings(UserStockLog.getSpendings());
+        userStockLogDTO.setSpending(UserStockLog.getSpendings());
         userStockLogDTO.setProfit(UserStockLog.getProfit());
         userStockLogDTO.setUserDTO(userService.mapUserToUserDTO(UserStockLog.getUser()));
         userStockLogDTO.setStockDTO(stockService.mapStockToStockDTO(UserStockLog.getStock()));
@@ -103,13 +103,6 @@ public class UserStockLogService {
             userStockLog.setCreated(new Date());
 
             userStockLogRepository.save(userStockLog);
-        } else {
-            int old_shares = userStockLog.getShares();
-            Double old_value = userStockLog.getPrice();
-            Double new_price = ((stock_price * stock_shares) + (old_value * old_shares)) / (old_shares + stock_shares);
-            userStockLog.setPrice(new_price);
-            userStockLog.setShares(old_shares + stock_shares);
-            userStockLog.setModified(new Date());
         }
         return 1;
     }
@@ -142,15 +135,8 @@ public class UserStockLogService {
             if (userStockLog != null) {
                 // has to add error validation
                 int old_shares = userStockLog.getShares();
-<<<<<<< HEAD
-                Double old_value = userStockLog.getPrice();
-                Double new_price = ((stock_price * stock_shares) + (old_value * old_shares)) / (old_shares + stock_shares);
-=======
                 Double old_value = userStockLog.getSpendings();
->>>>>>> 717160fc7e4a79a2a4bbb3f3af96f87fac643172
-
                 userStockLog.setUser(user);
-
                 // has to add error validation
                 userStockLog.setStock(stock);
                 userStockLog.setSpendings(price + old_value);

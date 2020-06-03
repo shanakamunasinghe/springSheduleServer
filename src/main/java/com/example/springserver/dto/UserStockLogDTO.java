@@ -8,7 +8,7 @@ public class UserStockLogDTO {
     private StockDTO stockDTO;
     private Double amount;
     private Integer shares;
-    private Double spendings;
+    private Double spending;
     private Double profit;
     private Date created;
     private Date modified;
@@ -68,9 +68,9 @@ public class UserStockLogDTO {
 
     public void setShares(Integer shares) { this.shares = shares; }
 
-    public Double getSpendings() { return spendings; }
+    public Double getSpending() { return spending; }
 
-    public void setSpendings(Double spendings) { this.spendings = spendings; }
+    public void setSpending(Double spending) { this.spending = spending; }
 
     public Double getProfit() { return profit; }
 
