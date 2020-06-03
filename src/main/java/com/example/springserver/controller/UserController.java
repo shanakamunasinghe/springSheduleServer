@@ -36,6 +36,18 @@ public class UserController {
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO){
         return new ResponseEntity<UserDTO>(userService.addUser(userDTO), HttpStatus.OK);
     }
+    @RequestMapping(value = "/addAssets",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> addAssets(@RequestBody UserDTO userDTO){
+        return new ResponseEntity<Double>(userService.addAssets(userDTO), HttpStatus.OK);
+    }
+    @RequestMapping(value = "/getAssets",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Double> getAssets(@RequestBody UserDTO userDTO){
+        return new ResponseEntity<Double>(userService.getAssets(userDTO), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/validate",
             method = RequestMethod.POST,

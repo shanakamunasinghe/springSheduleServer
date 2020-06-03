@@ -76,7 +76,7 @@ public class UserStockLogService {
         if (user == null) {
             throw new NullPointerException();
         }
-        if (stock != null) {
+        if (stock == null) {
             throw new NullPointerException();
         }
         Double price = stock_shares * stock_price;
@@ -88,6 +88,7 @@ public class UserStockLogService {
         }
         userRepository.save(user);
         if (userStockLog == null) {
+            userStockLog = new UserStockLog();
             // has to add error validation
             userStockLog.setUser(user);
 
@@ -100,7 +101,12 @@ public class UserStockLogService {
 
             userStockLogRepository.save(userStockLog);
         } else {
-            throw new IllegalArgumentException();
+            int old_shares = userStockLog.getShares();
+            Double old_value = userStockLog.getPrice();
+            Double new_price = ((stock_price * stock_shares) + (old_value * old_shares)) / (old_shares + stock_shares);
+            userStockLog.setPrice(new_price);
+            userStockLog.setShares(old_shares + stock_shares);
+            userStockLog.setModified(new Date());
         }
         return 1;
     }
@@ -113,7 +119,7 @@ public class UserStockLogService {
         if (user == null) {
             throw new NullPointerException();
         }
-        if (stock != null) {
+        if (stock == null) {
             throw new NullPointerException();
         }
         UserStockLog userStockLog = userStockLogRepository.findByUserIdAndStockId(user_id, stock_id);
@@ -131,7 +137,7 @@ public class UserStockLogService {
                 // has to add error validation
                 int old_shares = userStockLog.getShares();
                 Double old_value = userStockLog.getPrice();
-                Double new_price = (stock_price * stock_shares) + (old_value * old_shares) / (old_shares + stock_shares);
+                Double new_price = ((stock_price * stock_shares) + (old_value * old_shares)) / (old_shares + stock_shares);
 
                 userStockLog.setUser(user);
 
@@ -140,7 +146,7 @@ public class UserStockLogService {
 
                 userStockLog.setPrice(new_price);
                 userStockLog.setShares(old_shares + stock_shares);
-                userStockLog.setCreated(new Date());
+                userStockLog.setModified(new Date());
             }
         }
         // sell
@@ -160,7 +166,7 @@ public class UserStockLogService {
                     throw new IllegalArgumentException();
                 }
                 userStockLog.setShares(old_shares - stock_shares);
-                userStockLog.setCreated(new Date());
+                userStockLog.setModified(new Date());
             }
         }
         userRepository.save(user);

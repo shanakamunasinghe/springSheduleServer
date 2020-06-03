@@ -90,4 +90,22 @@ public class UserService {
             return userDTO;
         }
     }
+
+    public Double addAssets(UserDTO userDTO){
+        Double old_assets;
+        User user = userRepository.findOne(userDTO.getUser_id());
+        if(user != null) {
+           old_assets = user.getAssets();
+            user.setAssets(old_assets+userDTO.getAssets());
+            userRepository.save(user);
+        }else{
+            throw new NullPointerException();
+        }
+        return old_assets+userDTO.getAssets();
+    }
+
+    public Double getAssets(UserDTO userDTO){
+        User user = userRepository.findOne(userDTO.getUser_id());
+        return user.getAssets();
+    }
 }

@@ -59,8 +59,9 @@ public class SchedulerConfig {
         StockSocketResponse stockSocketResponse = new StockSocketResponse();
         if (enable) {
             String content = stockDataHandlerService.getStockData(count);
-            csvReader(count,stockSocketResponse);
-            stockSocketResponse.setPredict(content);
+            csvReader(count, stockSocketResponse);
+            if (!content.isEmpty())
+                stockSocketResponse.setPredict(content);
             count++;
         }
         template.convertAndSend("/topic/stockData", stockSocketResponse);
@@ -68,8 +69,7 @@ public class SchedulerConfig {
     }
 
 
-
-    public StockSocketResponse csvReader(int value, StockSocketResponse stockSocketResponse){
+    public StockSocketResponse csvReader(int value, StockSocketResponse stockSocketResponse) {
         int countValue = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             while ((line = br.readLine()) != null || countValue > 1349 + value) {
