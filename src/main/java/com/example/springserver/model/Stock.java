@@ -20,14 +20,13 @@ public class Stock {
     private Date created;
     private Date modified;
     private Integer stock_amount;
+    private Double stock_price;
 
 
     public Stock() {
     }
 
-    public int getStock_id() {
-        return stock_id;
-    }
+    public int getStock_id() { return stock_id; }
 
     public void setStock_id(int stock_id) {
         this.stock_id = stock_id;
@@ -79,5 +78,13 @@ public class Stock {
 
     public void setStock_amount(Integer stock_amount) {
         this.stock_amount = stock_amount;
+    }
+
+    public Double getStock_price() {
+        return stock_price;
+    }
+
+    public void setStock_price(Double stock_price) {
+        this.stock_price = stock_price;
     }
 }

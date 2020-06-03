@@ -21,7 +21,7 @@ public class User {
     private List<UserStockLog> userStockLogs;
     private Date created;
     private Date modified;
-    private Double assets;
+    private Double assets = 0.0;
     @JsonBackReference
     @OneToMany(mappedBy="user")
     private List<UserRoles> userRoles;

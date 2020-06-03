@@ -26,6 +26,8 @@ public class UserStockLog {
     private Stock stock;
     private Integer shares;
     private Double price;
+    private Double spendings;
+    private Double profit = 0.0;
     private Date created;
     private Date modified;
 
@@ -50,9 +52,7 @@ public class UserStockLog {
 
     public Stock getStock() { return stock; }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
+    public void setStock(Stock stock) { this.stock = stock; }
 
     public Date getCreated() {
         return created;
@@ -74,11 +74,17 @@ public class UserStockLog {
         return price;
     }
 
-    public void setPrice(Double amount) {
-        this.price = amount;
-    }
+    public void setPrice(Double amount) { this.price = amount; }
 
     public Integer getShares() { return shares; }
 
     public void setShares(Integer shares) { this.shares = shares; }
+
+    public Double getSpendings() { return spendings; }
+
+    public void setSpendings(Double spendings) { this.spendings = spendings; }
+
+    public Double getProfit() { return profit; }
+
+    public void setProfit(Double profit) { this.profit = profit; }
 }

@@ -41,4 +41,10 @@ public class StockController {
     public ResponseEntity<StockDTO> addStock(@RequestBody StockDTO stockDTO){
         return new ResponseEntity<StockDTO>(stockService.addStock(stockDTO), HttpStatus.OK);
     }
+    @RequestMapping(value = "/updateStock",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<StockDTO> updateStock(@RequestBody StockDTO stockDTO){
+        return new ResponseEntity<StockDTO>(stockService.editStock(stockDTO), HttpStatus.OK);
+    }
 }

@@ -41,6 +41,8 @@ public class UserStockLogService {
         userStockLogDTO.setAmount(UserStockLog.getPrice());
         userStockLogDTO.setShares(UserStockLog.getShares());
         userStockLogDTO.setCreated(UserStockLog.getCreated());
+        userStockLogDTO.setSpendings(UserStockLog.getSpendings());
+        userStockLogDTO.setProfit(UserStockLog.getProfit());
         userStockLogDTO.setUserDTO(userService.mapUserToUserDTO(UserStockLog.getUser()));
         userStockLogDTO.setStockDTO(stockService.mapStockToStockDTO(UserStockLog.getStock()));
 
@@ -96,6 +98,7 @@ public class UserStockLogService {
             userStockLog.setStock(stock);
 
             userStockLog.setPrice(stock_price);
+            userStockLog.setSpendings(price);
             userStockLog.setShares(stock_shares);
             userStockLog.setCreated(new Date());
 
@@ -123,6 +126,9 @@ public class UserStockLogService {
             throw new NullPointerException();
         }
         UserStockLog userStockLog = userStockLogRepository.findByUserIdAndStockId(user_id, stock_id);
+        if (userStockLog == null) {
+            throw new NullPointerException();
+        }
 
         // buy
         if (buyOrSell == 1) {
@@ -136,21 +142,25 @@ public class UserStockLogService {
             if (userStockLog != null) {
                 // has to add error validation
                 int old_shares = userStockLog.getShares();
+<<<<<<< HEAD
                 Double old_value = userStockLog.getPrice();
                 Double new_price = ((stock_price * stock_shares) + (old_value * old_shares)) / (old_shares + stock_shares);
+=======
+                Double old_value = userStockLog.getSpendings();
+>>>>>>> 717160fc7e4a79a2a4bbb3f3af96f87fac643172
 
                 userStockLog.setUser(user);
 
                 // has to add error validation
                 userStockLog.setStock(stock);
-
-                userStockLog.setPrice(new_price);
+                userStockLog.setSpendings(price + old_value);
+                userStockLog.setPrice((price + old_value)/(old_shares + stock_shares));
                 userStockLog.setShares(old_shares + stock_shares);
                 userStockLog.setModified(new Date());
             }
         }
         // sell
-        else {
+        else if(buyOrSell == 0){
             Double price = stock_shares * stock_price;
             Double totalAssets = user.getAssets();
             user.setAssets(totalAssets + price);
@@ -158,16 +168,27 @@ public class UserStockLogService {
                 // has to add error validation
                 userStockLog.setUser(user);
                 int old_shares = userStockLog.getShares();
+                Double old_spendings = userStockLog.getSpendings();
+                Double old_profit = userStockLog.getProfit();
                 // has to add error validation
                 userStockLog.setStock(stock);
 
-                userStockLog.setPrice(stock_price);
                 if (old_shares < stock_shares) {
                     throw new IllegalArgumentException();
+                }else if (old_shares == stock_shares){
+                    userStockLog.setPrice(0.0);
+                }
+                if(old_spendings < price){
+                    userStockLog.setSpendings(0.0);
+                    userStockLog.setProfit(price-old_spendings + old_profit);
+                }else {
+                    userStockLog.setSpendings(old_spendings - price);
                 }
                 userStockLog.setShares(old_shares - stock_shares);
                 userStockLog.setModified(new Date());
             }
+        }else{
+            throw new IllegalArgumentException();
         }
         userRepository.save(user);
         userStockLogRepository.save(userStockLog);

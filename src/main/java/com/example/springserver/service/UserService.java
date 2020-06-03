@@ -2,11 +2,13 @@ package com.example.springserver.service;
 
 import com.example.springserver.dto.RoleDTO;
 import com.example.springserver.dto.UserDTO;
+import com.example.springserver.dto.UserRoleDTO;
 import com.example.springserver.model.Role;
 import com.example.springserver.model.User;
 import com.example.springserver.model.UserRoles;
 import com.example.springserver.repository.RoleRepository;
 import com.example.springserver.repository.UserRepository;
+import com.example.springserver.repository.UserRolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,8 @@ import java.util.*;
 public class UserService {
     @Autowired
     public UserRepository userRepository;
-
+    @Autowired
+    public UserRolesRepository  userRolesRepository;
     @Autowired
     public RoleRepository roleRepository;
 
@@ -27,6 +30,7 @@ public class UserService {
         userDTO.setName(user.getName());
         userDTO.setEmail(user.getEmail());
         userDTO.setCreated(user.getCreated());
+        userDTO.setAssets(user.getAssets());
         if (user.getModified() != null) {
             userDTO.setModified(user.getModified());
         }
@@ -39,6 +43,7 @@ public class UserService {
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
+        user.setAssets(userDTO.getAssets());
         return user;
     }
 
@@ -60,6 +65,10 @@ public class UserService {
         User user = mapUserDTOToUser(userDTO);
         user.setCreated(new Date());
         User userNew = userRepository.save(user);
+        UserRoles userRoles = new UserRoles();
+        userRoles.setUser(userNew);
+        userRoles.setRole(roleRepository.findRoleByName("Member"));
+        userRolesRepository.save(userRoles);
         return mapUserToUserDTO(userNew);
     }
 
@@ -76,6 +85,17 @@ public class UserService {
         User user = userRepository.getOne(userDTO.getUser_id());
         if(user != null){
             userRepository.delete(user);
+        }
+        return userDTO;
+    }
+    public UserDTO depositMoney(UserDTO userDTO) {
+        User user = userRepository.getOne(userDTO.getUser_id());
+        if(user != null){
+
+            user.setAssets(userDTO.getAssets() + user.getAssets());
+            user.setModified(new Date());
+            userRepository.save(user);
+            userDTO = mapUserToUserDTO(user);
         }
         return userDTO;
     }
