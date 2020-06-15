@@ -1,6 +1,9 @@
 package com.example.springserver.service;
 
+import com.example.springserver.dto.PredictStockDTO;
 import com.example.springserver.dto.StockSocketResponse;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -12,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StockDataHandlerService {
@@ -23,17 +28,20 @@ public class StockDataHandlerService {
         client = HttpClients.createDefault();
     }
 
-    public String getStockData(int data) throws IOException {
+    public List<PredictStockDTO> getStockData(int data) throws IOException {
         String value = Integer.toString(data);
         httpGet  = new HttpGet(GET_URL+"getStockPrediction/"+value);
         CloseableHttpResponse httpResponse = client.execute(httpGet);
         System.out.println(httpResponse.getStatusLine().getStatusCode());
         HttpEntity entity = httpResponse.getEntity();
         // Read the contents of an entity and return it as a String.
-        String content = EntityUtils.toString(entity);
+        List<PredictStockDTO> predictStockDTOS = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+        predictStockDTOS = objectMapper.readValue(entity.getContent(),  new TypeReference<List<PredictStockDTO>>(){});
+//        String content = EntityUtils.toString(entity);
         httpResponse.close();
         client.close();
-        return content;
+        return predictStockDTOS;
     }
 
     public String createModel() throws IOException {
